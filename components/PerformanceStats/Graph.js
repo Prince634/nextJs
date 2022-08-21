@@ -1,20 +1,18 @@
 import { Bar } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
   
-  const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-  
-  export const data = {
-    labels,
-    datasets: [
-      {
-        label: '',
-        data: [20,40,10,132, 120, 46, 88],
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      }
-    ],
-  };
+  const Graph = ({ title, data, xAxis })=>{
 
-  const Graph = ({ title })=>{
+    const graphData = {
+      labels: xAxis,
+      datasets: [
+        {
+          label: '',
+          data: data,
+          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        }
+      ],
+    };
 
     const options = {
         responsive: true,
@@ -42,7 +40,7 @@ import Chart from 'chart.js/auto';
           } 
       };
 
-      return <Bar options={options} data={data} />
+      return <Bar options={options} data={graphData} />
   }
 
   export default Graph;

@@ -32,7 +32,7 @@ export const container = css`
     }
   }
   .scoreGraph{
-      flex: 2;
+      flex: 4;
       box-shadow: rgb(0 0 0 / 15%) 0px 0px 3px 0px;
       border-radius: 4px;
   }
@@ -88,7 +88,7 @@ export const coreVitalsWidget = css`
             font-size: 2rem;
             font-weight: 800;
             span{
-                font-size: 1.6rem;
+                font-size: 1.2rem;
             }
         }
         .vitalChart{
@@ -126,9 +126,10 @@ export const webVitalInfo = css`
             display: block;
         }
         .value{
-            color: grey;
             display: block;
-            padding-bottom: 1rem;
+            padding: 0.6rem 0px;
+            font-size: 1.2rem;
+            color: darkgray;
         }
         .vitalInfo{
             padding-top: 1rem;
@@ -150,7 +151,7 @@ export const webVitalInfo = css`
         }
     }
     .graph{
-        flex: 2;
+        flex: 4;
         box-shadow: rgb(0 0 0 / 15%) 0px 0px 3px 0px;
     }
 `
