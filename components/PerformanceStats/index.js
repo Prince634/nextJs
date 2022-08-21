@@ -1,8 +1,10 @@
 import { useMemo, useState } from 'react';
+import { cx } from '@emotion/css'
 
 import WebVitalInfo from './WebVitalInfo';
 import Graph from './Graph';
-import { container, scorePieChart, coreVitalsWidget } from './style.js';
+import ProgressBar from './ProgressBar';
+import { container, scorePieChart, coreVitalsWidget, widgetColor } from './style.js';
 
 const performanceAnalytics = [
     {
@@ -36,11 +38,11 @@ const performanceAnalytics = [
         tagName: '',
         commitId: '',
         performanceMetrics: {
-            lcp: 2,
-            score: 100,
+            lcp: 6,
+            score: 30,
             fcp: 0.4,
             cls: 0.01,
-            fid: 2
+            fid: 200
         },
         timestamp: new Date().toDateString()
     }
@@ -74,22 +76,38 @@ const PerformanceStats = ()=>{
             fcpList:{
                 type: 'fcpList',
                 data: fcpList,
-                heading: 'First Contentful Paint'
+                heading: 'First Contentful Paint',
+                info: 'When the browser renders the first bit of content from the DOM, providing the first feedback to the user that the page is actually loading.',
+                cta: 'https://web.dev/fcp/',
+                threshold: 1.6,
+                unit: 's'
             },
             lcpList: {
                 type: 'lcpList',
                 data: lcpList,
-                heading: 'Largest Contentful Paint'
+                heading: 'Largest Contentful Paint',
+                info: 'Measures loading performance. To provide a good user experience, LCP should occur within 2.5 seconds of when the page first starts loading.',
+                cta: 'https://web.dev/lcp/',
+                threshold: 2.4,
+                unit: 's'
             },
             clsList: {
                 type: 'clsList',
                 data: clsList,
-                heading: 'Cumulative Layout Shift'
+                heading: 'Cumulative Layout Shift',
+                info: 'Measures the sum total of all individual layout shift scores for every unexpected layout shift that occurs during the entire lifespan of the page.',
+                cta: 'https://web.dev/cls/',
+                threshold: 0.25,
+                unit: ''
             },
             fidList: {
                 type: 'fidList',
                 data: fidList,
-                heading: 'First Input Delay'
+                heading: 'First Input Delay',
+                info: 'Measures the time from the first user interaction to when the browser begins processing event handlers in response to that interaction.',
+                cta: 'https://web.dev/fid/',
+                threshold: 100,
+                unit: 'ms'
             },
         }
     })
@@ -101,9 +119,7 @@ const PerformanceStats = ()=>{
                 <div className="scoreInfo">
                     <p className="scoreTitle">PSI/LH Score</p>
                     <div className={scorePieChart}>
-                        <div className="chart">
-                            <span>{latestScore}</span>
-                        </div>
+                        <ProgressBar score={latestScore}/>
                         {/* <p className="dataPoints">66 Data Points</p> */}
                     </div>
                 </div>
@@ -115,11 +131,24 @@ const PerformanceStats = ()=>{
             <div className={coreVitalsWidget}>
                 {
                     Object.values(webVitals).map((val , key)=>{
-                        const { type, data, heading } = val;
-                        return <div className={`widget ${activeTab===type?'active': ''}`} key={key} onClick={()=>setActiveTab(type)}>
+                        const { type, data, heading, threshold, unit } = val;
+                        const lastScore = data[data.length-1];
+                        let bgColor = lastScore>threshold?'#ff4e42':'#0c6';
+                        let widgetFontColor = lastScore>threshold?'#ff4e42':'#0c6';
+
+                        if(activeTab===type){
+                            widgetFontColor: '#FFF';
+                        }else{
+                            bgColor='#FFF';
+                        }
+                        const vitalStyle = cx(
+                            {widget: true},
+                            {[widgetColor({isActive: activeTab===type, bgColor, widgetFontColor })]: true},
+                        )
+                        return <div className={vitalStyle} key={key} onClick={()=>setActiveTab(type)}>
                         <span className="vitalName">{heading}</span>
                         <div className="vitalInfo">
-                            <span className="vitalScore">{data[data.length-1]}<span>s</span></span>
+                            <span className="vitalScore">{lastScore}<span>{unit}</span></span>
                             <span className="vitalChart">100</span>
                         </div>
                     </div>

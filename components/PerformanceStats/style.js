@@ -11,16 +11,16 @@ injectGlobal`
 `
 
 export const container = css`
-  padding: 40px;
+  padding: 40px 120px;
   h2{
       font-size: 3rem;
   }
   .pageScoreWidget{
       display: flex;
-      max-height: 400px;
+      margin-bottom: 20px;
   }
   .scoreInfo{
-    flex: 1;
+    width: 30%;
     box-shadow: rgb(0 0 0 / 15%) 0px 0px 3px 0px;
     border-radius: 4px;
     margin-right: 6px;
@@ -36,6 +36,15 @@ export const container = css`
       box-shadow: rgb(0 0 0 / 15%) 0px 0px 3px 0px;
       border-radius: 4px;
   }
+  @media(max-width: 768px){
+        padding: 40px;
+      .pageScoreWidget{
+          flex-direction: column;
+      }
+      .scoreInfo{
+          width: 100%;
+      }
+  }
 `
 
 export const scorePieChart = css`
@@ -43,18 +52,6 @@ export const scorePieChart = css`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    .chart{
-        height: 80px;
-        width: 80px;
-        border-radius: 50%;
-        border: 0.6rem solid #0c6;
-        font-size: 2rem;
-        display: flex;
-        span{
-            margin: auto;
-            font-weight: 900;
-        }
-    }
     .dataPoints{
         margin-top: 2rem;
         padding: 8px;
@@ -92,30 +89,47 @@ export const coreVitalsWidget = css`
             }
         }
         .vitalChart{
-            height: 24px;
-            width: 24px;
+            height: 28px;
+            width: 28px;
             border-radius: 50%;
-            border: 2px solid #0c6;
             font-weight: 800;
             display: flex;
             align-items: center;
             justify-content: center;
         }
     }
-    .active{
-        background: #0c6;
-        color: #FFF;
-        .vitalChart{
-            border: 2px solid #FFF;
-        }
+    @media(max-width: 768px){
+        flex-wrap: wrap;
+    }
+`
+
+export const widgetColor = props=>css`
+    background: ${props.bgColor};
+    .vitalName{
+        color: ${props.isActive?'#FFF':'#000'};
+    }
+    .vitalChart{
+        border: 3px solid ${props.isActive?'#FFF':props.widgetFontColor};
+        color: ${props.isActive?'#FFF':props.widgetFontColor};
+    }
+    .vitalScore{
+        color: ${props.isActive?'#FFF':props.widgetFontColor};
     }
 `
 
 export const webVitalInfo = css`
     display: flex;
-    height: 300px;
+    min-height: 300px;
+    .infoSection{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
     .score{
         position: relative;
+        display: flex;
+        flex-direction: column;
         flex: 1;
         padding: 2rem;
         box-shadow: rgb(0 0 0 / 15%) 0px 0px 3px 0px;
@@ -128,7 +142,7 @@ export const webVitalInfo = css`
         .value{
             display: block;
             padding: 0.6rem 0px;
-            font-size: 1.2rem;
+            font-size: 1.6rem;
             color: darkgray;
         }
         .vitalInfo{
@@ -141,17 +155,54 @@ export const webVitalInfo = css`
             }
         }
         button{
-            background: blue;
+            background: #0070f3;
+            cursor: pointer;
             color: #FFF;
             border: 0px;
-            padding: 8px;
-            position: absolute;
-            bottom: 2rem;
             font-weight: 800;
+            padding: 12px;
+            border-radius: 4px;
+            border: 1px solid #0070f3;
+            &:hover{
+                background: #FFF;
+                color: #0070f3;
+            }
         }
     }
     .graph{
-        flex: 4;
+        width: 69%;
         box-shadow: rgb(0 0 0 / 15%) 0px 0px 3px 0px;
     }
+    @media(max-width: 768px){
+        flex-direction: column;
+        .score{
+            margin-right: 0px;
+        }
+        .graph{
+            width: 100%;
+        }
+    }
 `
+
+export const timer = props => css`
+    height: 180px;
+    width: 180px;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: conic-gradient(${props.color} ${props.offset}deg, #ededed 0deg);
+    .value{
+        font-size: ${props.fontSize}rem;
+        z-index: 1;
+    }
+    &:after{
+        position: absolute;
+        content: '';
+        height: 160px;
+        width: 160px;
+        border-radius: 50%;
+        background: #FFF;
+    }
+`;

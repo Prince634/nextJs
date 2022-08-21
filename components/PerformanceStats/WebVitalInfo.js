@@ -1,18 +1,29 @@
+import { useCallback } from 'react';
 import Graph from './Graph';
 import { webVitalInfo } from './style.js';
 
 const WebVitalInfo = ({ stats, xAxis })=>{
-    const { heading, data } = stats||{};
+    const { heading, data, info, cta, threshold, unit } = stats||{};
+
+    const getScore = useCallback(()=>{
+        const lastScore = data[data.length-1];
+        let text = `${lastScore<=threshold?'below':'above'} ${threshold}`;
+        return <>
+            <span className="status">{lastScore<=threshold?'Good':'Poor'}</span>
+            <span className="value">{`${text} ${unit}`}</span>
+        </>
+    },[threshold, data])
 
     return(
         <div className={webVitalInfo}>
             <div className="score">
-                <span className="status">Good</span>
-                <span className="value">Below 0.4s</span>
-                <div className="vitalInfo">
-                    <span>Values are estimated and may vary. The performance score is calculated directly from these metrics.See calculator.</span>
+                {getScore()}
+                <div className="infoSection">
+                    <div className="vitalInfo">
+                        <span>{info}</span>
+                    </div>
+                    <button onClick={()=>window.open(cta, '_blank')}>Learn More</button>
                 </div>
-                <button>Learn More</button>
             </div>
             <div className="graph">
                 <Graph title={heading} data={data} xAxis={xAxis}/>
