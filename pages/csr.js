@@ -5,6 +5,6 @@ const MainView = dynamic(() => import('./../components/CuratedDemo/Allssr'), {
   })
 export default function Home() {
   return (
-    <MainView showLoadingWidget/>
+    <MainView showLoadingWidget isCSR/>
   )
 }

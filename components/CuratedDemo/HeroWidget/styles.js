@@ -12,21 +12,25 @@ export const WidgetBackground = props=>css`
     width: 100%;
     max-width: 1920px;
     margin: auto;
-    background: linear-gradient(
-            90deg,
-            rgba(0, 0, 0, 0.7) 0%,
-            rgba(0, 0, 0, 0.5) 51.04%,
-            rgba(0, 0, 0, 0) 100%
-        ),
-        url(${props.heroImg}), #e3e3e3;
-    background-repeat: no-repeat;
-    background-size: contain;
+    color: #000;
+    .hero-img{
+        object-fit: cover;
+        position: relative;
+        width: 100%;
+       
+    }
     overflow: hidden;
     &:before {
         content: '';
         position: absolute;
         width: 100%;
         height: 100%;
+        background: linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.7) 0%,
+            rgba(0, 0, 0, 0.5) 51.04%,
+            rgba(0, 0, 0, 0) 100%
+        );
     }
     .widget-cont {
         position: absolute;
@@ -37,14 +41,14 @@ export const WidgetBackground = props=>css`
     button{
         background: #0070f3;
         cursor: pointer;
-        color: #FFF;
+        color: #000;
         border: 0px;
         font-weight: 800;
         padding: 12px;
         border-radius: 4px;
         border: 1px solid #0070f3;
         &:hover{
-            background: #FFF;
+            background: #000;
             color: #0070f3;
         }
     }
@@ -76,7 +80,7 @@ export const HeroWidgetStyling = css`
         font-weight: 600;
         font-size: 40px;
         line-height: 48px;
-        color: #ffffff;
+        color: #000;
         margin-bottom: 8px;
     }
     .widget-new-heading {
@@ -86,7 +90,7 @@ export const HeroWidgetStyling = css`
         font-weight: 400;
         font-size: 16px;
         line-height: 24px;
-        color: #ffffff;
+        color: #000;
         max-width: 523px;
     }
     button {

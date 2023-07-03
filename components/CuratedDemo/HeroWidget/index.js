@@ -1,8 +1,8 @@
 import React from 'react';
-import { WidgetBackground, HeroWidgetStyling } from './styles';
 import { HOME_PAGE_HERO_WIDGET } from '../constant';
+import styles from '../../../styles/curated.module.css';
 
-const HeroWidget = () => {
+const HeroWidget = ({isSSR, isCSR}) => {
     const { heading, subHeading, cta, headingNew } = HOME_PAGE_HERO_WIDGET;
 
     const scrollToForm = () => {
@@ -10,20 +10,26 @@ const HeroWidget = () => {
             .getElementById('contact-us-form')
             ?.scrollIntoView({ behavior: 'smooth' });
     };
-const heroImg="https://publisherciprodimages.blob.core.windows.net/demand/hero-bg.png"
     return (
         <>
-            <div className={WidgetBackground({heroImg})} >
-                <div className="widget-cont">
-                    <div className={HeroWidgetStyling}>
-                        <div className="widget-heading">
+            <div className={styles.WidgetBackground} >
+                {
+                    isSSR || isCSR?
+                    <img src="/hero.png" className={styles.heroImg}/>
+                    :<img src="/hero.png" className={styles.heroImg} fetchpriority="high"/>
+                }
+                
+                <div className={styles.widgetCont}>
+                    <div>
+                        <div className={styles.widgetHeading}>
                             {heading}
-                            <span className="widget-new-heading">
+                            <span className={styles.widgetNewHeading}>
                                 {headingNew}
                             </span>
                         </div>
-                        <div className="widget-subheading">{subHeading}</div>
+                        <div className={styles.widgetSubheading}>{subHeading}</div>
                         <button
+                            className={styles.button}
                             onClick={scrollToForm}
                         >
                             {cta}

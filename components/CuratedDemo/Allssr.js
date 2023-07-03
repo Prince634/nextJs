@@ -9,13 +9,13 @@ import MainView from './MainView';
 //     ssr: false,
 //   })
 
-const HomeView = ({showLoadingWidget, isSSR}) => {
+const HomeView = ({showLoadingWidget, isSSR, isCSR}) => {
     return (
         <div className="curated">
             <div className={PackageContainer}>
-                <HeroWidget />
+                <HeroWidget isCSR={isCSR} isSSR={isSSR}/>
                 <PackageFeature/>
-                <MainView showLoadingWidget={showLoadingWidget} isSSR={isSSR}/>
+                <MainView showLoadingWidget={showLoadingWidget} isSSR={isSSR} isCSR={isCSR}/>
                 <Footer/>
             </div>
         </div>

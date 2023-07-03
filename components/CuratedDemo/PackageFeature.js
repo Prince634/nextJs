@@ -1,18 +1,19 @@
 import React from 'react';
 import { FeatureStyle } from './style';
 import { PACKAGE_FEATURE } from './constant';
+import styles from '../../styles/curated.module.css';
 
 const PackageFeatures = () => {
     return (
-        <div className={FeatureStyle}>
-            <div className="feature-cont">
-                <div className="feature-list">
+        <div className={styles.feature}>
+            <div className={styles.featureCont}>
+                <div className={styles.featureList}>
                     {PACKAGE_FEATURE.map((val, key) => {
                         const { name, desc } = val;
                         return (
-                            <div className="feature-item" key={key}>
-                                <div className="feature-name">{name}</div>
-                                <div className="feature-desc">{desc}</div>
+                            <div className={styles.featureItem} key={key}>
+                                <div className={styles.featureName}>{name}</div>
+                                <div className={styles.featureDesc}>{desc}</div>
                             </div>
                         );
                     })}
